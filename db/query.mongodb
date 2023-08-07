@@ -1,0 +1,57 @@
+use("test");
+db.createCollection("usuario", {
+    capped: true,
+    size: 690,
+    max: 5,
+    validator: {
+        $jsonSchema: {
+            "bsonType": "object",
+            "required": ["nombre", "apellido", "edad"],
+            "properties": {
+                "nombre": {
+                    "bsonType": "string",
+                    "maxLength": 20,
+                    "description": "Debe ser una cadena de hasta 20 caracteres"
+                },
+                "apellido": {
+                    "bsonType": "string",
+                    "maxLength": 20,
+                    "description": "Debe ser una cadena de hasta 20 caracteres"
+                },
+                "edad": {
+                    "bsonType": "int",
+                    "minimum": 1,
+                    "maximum": 100
+                }
+            }
+        }   
+    }
+});
+use("test");
+db.usuario.insertMany([
+    {
+        "nombre": "1",
+        "apellido": "aaaaaaaaaaaaaaaaaaaa",
+        "edad": 8
+    },
+    {
+        "nombre": "2",
+        "apellido": "bbbbbbbbbbbbbbbbbbbb",
+        "edad": 111
+    },
+    {
+        "nombre": "3",
+        "apellido": "cccccccccccccccccccc",
+        "edad": 111
+    },
+    {
+        "nombre": "4",
+        "apellido": "dddddddddddddddddddd",
+        "edad": 111
+    },
+    {
+        "nombre": "5",
+        "apellido": "eeeeeeeeeeeeeeeeeeee",
+        "edad": 111
+    }
+]);
